@@ -24,15 +24,6 @@ def generate_secret():
     return secrets.token_hex()
 
 
-scroll_script = """
-    var el = document.getElementById('messages');
-    el.scrollTo({
-        top: el.scrollHeight,
-        behavior: 'smooth'
-    });
-"""
-
-
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     with state_lock:
