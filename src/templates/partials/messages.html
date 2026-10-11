@@ -1,0 +1,19 @@
+<div
+  id="messages"
+  class="min-h-0 overflow-y-auto"
+  data-init="@query('{{ url_for('query_messages') }}')"
+>
+  {% if messages %}
+  <ul>
+    {% for message in messages %}
+    <li class="m-4 grid max-w-dvw grid-cols-[1fr_11fr]">
+      <span class="mr-2 font-semibold">{{ '%04d' % message.user }}:</span>
+      <span class="text-2xl wrap-anywhere">{{ message.content }}</span>
+      <hr class="col-span-2 m-2 border-t-purple-900" />
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <span>No messages yet :(</span>
+  {% endif %}
+</div>

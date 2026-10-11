@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hypermedia Chat</title>
+    <link href="{{ url_for('static', path='output.css') }}" rel="stylesheet" />
+    <script
+      type="module"
+      src="{{ url_for('static', path='datastar.js')}}"
+    ></script>
+  </head>
+  <body
+    class="grid h-dvh grid-rows-[1fr_16fr_1fr] overflow-y-hidden bg-purple-600"
+  >
+    <header class="grid items-center bg-purple-600">
+      <span class="text-center text-2xl font-bold text-purple-300"
+        >Hypermedia Chat</span
+      >
+    </header>
+    <main class="grid min-h-0 grid-rows-[1fr_auto] bg-purple-800">
+      {% include 'partials/messages.html' %}
+      <div class="bg-purple-400">
+        <textarea
+          id="message"
+          placeholder="Send a message..."
+          class="h-full w-full bg-purple-500 px-8 py-4 text-purple-200 focus:outline-none"
+          data-bind:message
+          data-signals="{user: '{{ user }}', secret: '{{ secret }}' }"
+          data-on:keydown="evt.key === 'Enter' && !evt.shiftKey ? @post('{{ url_for('post_messages') }}') : null"
+        ></textarea>
+      </div>
+    </main>
+    <footer class="grid items-center">
+      <span class="text-center">You are user {{ user }}</span>
+    </footer>
+    <script>
+      function message_scroll() {
+        var el = document.getElementById("messages");
+        el.scrollTo({
+          top: el.scrollHeight,
+          behavior: "smooth",
+        });
+      }
+      setTimeout(message_scroll, 500);
+    </script>
+  </body>
+</html>
